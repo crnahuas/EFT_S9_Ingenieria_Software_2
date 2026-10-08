@@ -1,6 +1,6 @@
 # Nuevos Horizontes
 
-Entrega grupal de la EFT de Semana 9 de Ingeniería de Software II. El proyecto propone un sistema para gestionar residentes, cuotas de gastos comunes, pagos, morosidad, comprobantes, informes, personal e instalaciones del edificio Nuevos Horizontes.
+Entrega de la EFT de Semana 9 de Ingeniería de Software II. El proyecto propone un sistema para gestionar residentes, cuotas de gastos comunes, pagos, morosidad, comprobantes, informes, personal e instalaciones del edificio Nuevos Horizontes.
 
 ## Integrantes
 
@@ -12,10 +12,17 @@ Entrega grupal de la EFT de Semana 9 de Ingeniería de Software II. El proyecto 
 
 | Artefacto | Archivo | Contenido |
 |---|---|---|
-| Informe grupal DAS | [`docs/das/GRY2203_EFT_S9_Grupo7_DAS_ENTREGA_DEFINITIVA_V3.docx`](docs/das/GRY2203_EFT_S9_Grupo7_DAS_ENTREGA_DEFINITIVA_V3.docx) | Requisitos, casos de uso, arquitectura 4+1, decisiones de diseño y trazabilidad del proyecto. |
-| Diagramas editables | [`docs/arquitectura/EXP2_S9_Grupo7_Diagramas_CORREGIDO.drawio`](docs/arquitectura/EXP2_S9_Grupo7_Diagramas_CORREGIDO.drawio) | Vistas de escenarios, lógica, proceso, desarrollo y física, además de especificaciones de casos de uso. |
-| Prototipo interactivo | [`prototipos/alta-fidelidad/prototipo_nuevos_horizontes_s9_corregido.html`](prototipos/alta-fidelidad/prototipo_nuevos_horizontes_s9_corregido.html) | Mockup navegable con acceso y opciones diferenciadas para Administración y Residente. |
+| Informe grupal DAS | [`docs/das/GRY2203_EFT_S9_Grupo7_DAS.docx`](docs/das/GRY2203_EFT_S9_Grupo7_DAS.docx) | Versión final del informe con requisitos, casos de uso, arquitectura 4+1, decisiones de diseño y trazabilidad del proyecto. |
+| Diagramas editables | [`docs/arquitectura/EXP2_S9_Grupo7_Diagramas.drawio`](docs/arquitectura/EXP2_S9_Grupo7_Diagramas.drawio) | Archivo final con las vistas de escenarios, lógica, proceso, desarrollo y física, además de las especificaciones de casos de uso. |
+| Prototipo interactivo | [`prototipos/alta-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo.html`](prototipos/alta-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo.html) | Mockup final navegable con acceso y opciones diferenciadas para Administración y Residente. |
 | Matriz de trazabilidad | [`docs/MATRIZ_TRAZABILIDAD.md`](docs/MATRIZ_TRAZABILIDAD.md) | Relación entre casos de uso, requisitos funcionales y no funcionales, arquitectura y evidencia del prototipo. |
+
+## Preparación de la entrega final
+
+- Se consolidó el informe en `GRY2203_EFT_S9_Grupo7_DAS.docx`.
+- Se normalizó el nombre del archivo editable a `EXP2_S9_Grupo7_Diagramas.drawio`.
+- Se identificó el prototipo navegable como `GRY2203_EFT_S9_Grupo7_Prototipo.html`.
+- Se actualizaron los enlaces y la estructura del repositorio para utilizar únicamente los nombres finales.
 
 ## Cobertura
 
@@ -46,12 +53,12 @@ El prototipo es una simulación académica. No contiene backend, persistencia, a
 ├── docs
 │   ├── MATRIZ_TRAZABILIDAD.md
 │   ├── arquitectura
-│   │   └── EXP2_S9_Grupo7_Diagramas_CORREGIDO.drawio
+│   │   └── EXP2_S9_Grupo7_Diagramas.drawio
 │   └── das
-│       └── GRY2203_EFT_S9_Grupo7_DAS_ENTREGA_DEFINITIVA_V3.docx
+│       └── GRY2203_EFT_S9_Grupo7_DAS.docx
 └── prototipos
     └── alta-fidelidad
-        └── prototipo_nuevos_horizontes_s9_corregido.html
+        └── GRY2203_EFT_S9_Grupo7_Prototipo.html
 ```
 
 ## Presentación individual
