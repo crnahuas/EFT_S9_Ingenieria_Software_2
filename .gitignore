@@ -1,0 +1,41 @@
+# Sistema operativo
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Editores y archivos temporales
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# Temporales de Microsoft Office
+~$*.doc*
+~$*.xls*
+~$*.ppt*
+
+# Dependencias y resultados generados
+node_modules/
+dist/
+build/
+coverage/
+
+# Configuración local y credenciales
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Paquetes y material individual no versionado automáticamente
+*.zip
+*.7z
+*.rar
+*.mp4
