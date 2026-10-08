@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nuevos Horizontes · Prototipo interactivo de alta fidelidad</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --nh-navy: #143b5d;
+      --nh-blue: #2563eb;
+      --nh-teal: #0d9488;
+      --nh-bg: #f4f7fb;
+      --nh-ink: #183044;
+      --nh-muted: #64748b;
+    }
+
+    body {
+      background: var(--nh-bg);
+      color: var(--nh-ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+    }
+
+    .app-frame {
+      max-width: 1500px;
+      background: #fff;
+      border: 1px solid #dbe4ee;
+      box-shadow: 0 18px 45px rgba(20, 59, 93, .12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-frame > .container-fluid {
+      flex: 1 1 auto;
+    }
+
+    .app-frame > footer {
+      margin-top: 0;
+      background: #f8fafc;
+      border-top: 1px solid #e4ebf3 !important;
+    }
+
+    .topbar {
+      background: linear-gradient(120deg, var(--nh-navy), #205b87);
+    }
+
+    .topbar .navbar-brand,
+    .topbar .nav-link,
+    .topbar .btn {
+      color: #fff;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .16);
+    }
+
+    .sidebar {
+      background: #fbfdff;
+      border-right: 1px solid #e4ebf3;
+    }
+
+    .sidebar .nav-link,
+    .offcanvas .nav-link {
+      color: #52677d;
+      border-radius: 10px;
+      padding: .7rem .8rem;
+      font-weight: 600;
+    }
+
+    .sidebar .nav-link:hover,
+    .offcanvas .nav-link:hover {
+      background: #edf5fb;
+      color: var(--nh-navy);
+    }
+
+    .sidebar .nav-link.active,
+    .offcanvas .nav-link.active {
+      background: #e6f0fa;
+      color: var(--nh-navy);
+    }
+
+    .sidebar .nav-link i,
+    .offcanvas .nav-link i {
+      width: 1.5rem;
+    }
+
+    .role-card {
+      background: linear-gradient(135deg, #eef7ff, #f8fbff);
+      border: 1px solid #d9e8f5;
+    }
+
+    .role-avatar {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: var(--nh-blue);
+      font-weight: 800;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .page-title {
+      color: var(--nh-navy);
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .text-muted-custom {
+      color: var(--nh-muted);
+    }
+
+    .metric-card {
+      border: 1px solid #e1eaf3;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(20, 59, 93, .05);
+    }
+
+    .metric-icon {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 1.2rem;
+    }
+
+    .metric-icon.blue {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .metric-icon.green {
+      background: #d1fae5;
+      color: #047857;
+    }
+
+    .metric-icon.amber {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .metric-icon.red {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .panel {
+      border: 1px solid #e1eaf3;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(20, 59, 93, .04);
+    }
+
+    .panel-header {
+      border-bottom: 1px solid #e9eef4;
+    }
+
+    .table thead th {
+      color: #597087;
+      font-size: .76rem;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .table tbody td {
+      vertical-align: middle;
+    }
+
+    .table-responsive {
+      border-radius: 12px;
+    }
+
+    .status-badge {
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .35rem .6rem;
+    }
+
+    .status-paid {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-info {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .alert-card {
+      border-left: 4px solid var(--nh-teal);
+      background: #f8fcfc;
+    }
+
+    .alert-card.danger {
+      border-left-color: #dc3545;
+      background: #fff8f8;
+    }
+
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--nh-teal);
+      border-radius: 50%;
+      margin-top: .45rem;
+      flex: 0 0 auto;
+    }
+
+    .login-wrap {
+      max-width: 520px;
+      margin: 3rem auto;
+    }
+
+    .login-card {
+      border: 0;
+      border-radius: 22px;
+      box-shadow: 0 18px 45px rgba(20, 59, 93, .12);
+      overflow: hidden;
+    }
+
+    .login-banner {
+      background: linear-gradient(135deg, var(--nh-navy), #2677a8);
+      color: #fff;
+    }
+
+    .form-control,
+    .form-select {
+      border-color: #cbd7e3;
+      padding: .7rem .8rem;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #5aa5cf;
+      box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .14);
+    }
+
+    .btn-primary {
+      --bs-btn-bg: var(--nh-navy);
+      --bs-btn-border-color: var(--nh-navy);
+      --bs-btn-hover-bg: #0e2c45;
+      --bs-btn-hover-border-color: #0e2c45;
+    }
+
+    .btn-teal {
+      background: var(--nh-teal);
+      border-color: var(--nh-teal);
+      color: #fff;
+    }
+
+    .btn-teal:hover {
+      background: #0b766e;
+      border-color: #0b766e;
+      color: #fff;
+    }
+
+    .profile-row {
+      border-bottom: 1px solid #edf1f5;
+    }
+
+    .profile-row:last-child {
+      border-bottom: 0;
+    }
+
+    .profile-label {
+      color: var(--nh-muted);
+      font-size: .85rem;
+    }
+
+    .toast-container {
+      z-index: 1090;
+    }
+
+    .modal {
+      z-index: 1060;
+    }
+
+    .modal-backdrop {
+      z-index: 1050;
+    }
+
+    .modal-content {
+      background-color: #fff;
+    }
+
+    .modal.show {
+      opacity: 1;
+    }
+
+    main,
+    .screen {
+      min-width: 0;
+    }
+
+    .d-flex>* {
+      min-width: 0;
+    }
+
+    .alert {
+      min-width: 0;
+    }
+
+    .alert>div {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width:991.98px) {
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid #e4ebf3;
+      }
+    }
+
+    @media (max-width:575.98px) {
+      .app-shell {
+        padding: 0 !important;
+      }
+
+      .app-frame {
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0 !important;
+      }
+
+      .login-wrap {
+        margin: 1.5rem auto;
+      }
+
+      .page-title {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell p-3 p-lg-4">
+    <section class="app-frame rounded-4 overflow-hidden mx-auto">
+      <nav class="topbar navbar navbar-expand-lg px-3 px-lg-4 py-3">
+        <div class="container-fluid p-0">
+          <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#" data-screen="dashboard">
+            <span class="brand-mark"><i class="bi bi-buildings"></i></span>
+            <span>Nuevos Horizontes<small class="d-block fw-normal opacity-75">Gestión de gastos comunes</small></span>
+          </a>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge rounded-pill text-bg-light d-none d-md-inline" id="roleBadge">Administración</span>
+            <button class="btn btn-link d-lg-none fs-4 p-1" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#mobileNav" aria-controls="mobileNav" aria-label="Abrir menú"><i
+                class="bi bi-list"></i></button>
+            <button class="btn btn-link fs-5 p-1" type="button" aria-label="Notificaciones"><i
+                class="bi bi-bell"></i></button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid p-0">
+        <div class="row g-0">
+          <aside class="sidebar col-lg-3 col-xl-2 d-none d-lg-block p-3">
+            <div class="role-card rounded-3 p-3 mb-4">
+              <div class="d-flex align-items-center gap-2"><span class="role-avatar" id="desktopAvatar">AP</span>
+                <div><strong class="d-block" id="desktopRoleName">Ana Pérez</strong><small class="text-muted-custom"
+                    id="desktopRoleLabel">Administración</small></div>
+              </div><small class="text-muted-custom d-block mt-3">Acceso a residentes, pagos y alertas</small>
+            </div>
+            <nav class="nav flex-column gap-1" aria-label="Navegación principal" id="desktopNav"></nav>
+          </aside>
+
+          <main class="col-lg-9 col-xl-10 p-3 p-md-4 p-xl-5">
+            <section id="login" class="screen active">
+              <div class="login-wrap">
+                <div class="login-card card">
+                  <div class="login-banner p-4 p-md-5">
+                    <h1 class="h2 fw-bold mb-2">Bienvenido a tu comunidad</h1>
+                    <p class="mb-0 opacity-75">Consulta pagos, residentes y alertas desde un solo lugar.</p>
+                  </div>
+                  <div class="card-body p-4 p-md-5">
+                    <form id="loginForm" novalidate><label class="form-label fw-semibold" for="loginRole">Tipo de
+                        usuario</label><select class="form-select" id="loginRole" required>
+                        <option value="admin">Administración</option>
+                        <option value="resident">Residente</option>
+                      </select>
+                      <div class="invalid-feedback">Selecciona un tipo de usuario.</div><label
+                        class="form-label fw-semibold mt-3" for="loginEmail">Correo electrónico</label><input
+                        class="form-control" id="loginEmail" type="email" placeholder="nombre@correo.cl" required>
+                      <div class="invalid-feedback">Ingresa un correo válido.</div><label
+                        class="form-label fw-semibold mt-3" for="loginPassword">Contraseña</label><input
+                        class="form-control" id="loginPassword" type="password" minlength="6"
+                        placeholder="Mínimo 6 caracteres" required>
+                      <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                      <div class="d-flex justify-content-between align-items-center mt-4">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="rememberMe"><label
+                            class="form-check-label small" for="rememberMe">Recordarme</label></div><button
+                          class="btn btn-primary px-4" type="submit">Ingresar <i
+                            class="bi bi-arrow-right ms-1"></i></button>
+                      </div><button class="btn btn-link px-0 mt-3 text-decoration-none" type="button"
+                        data-toast="Se enviará un enlace de recuperación al correo registrado.">¿Olvidaste tu
+                        contraseña?</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="dashboard" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Resumen de administración</h1>
+                  <p class="text-muted-custom mb-0">Una vista general para tomar decisiones y anticipar la morosidad.
+                  </p>
+                </div><button class="btn btn-primary" data-screen="reports"><i class="bi bi-download me-1"></i>Exportar
+                  informe</button>
+              </div>
+              <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mb-4">
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><span class="metric-icon blue"><i class="bi bi-cash-stack"></i></span><small
+                        class="d-block text-muted-custom mt-3">Recaudado este mes</small><strong
+                        class="fs-3">$12.480.000</strong><small class="d-block text-success mt-1"><i
+                          class="bi bi-arrow-up-right"></i> 8,4% vs. mes anterior</small></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><span class="metric-icon amber"><i
+                          class="bi bi-hourglass-split"></i></span><small class="d-block text-muted-custom mt-3">Pagos
+                        pendientes</small><strong class="fs-3">35</strong><small
+                        class="d-block text-muted-custom mt-1">de 160 departamentos</small></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><span class="metric-icon red"><i
+                          class="bi bi-exclamation-triangle"></i></span><small
+                        class="d-block text-muted-custom mt-3">Alertas activas</small><strong
+                        class="fs-3">12</strong><small class="d-block text-danger mt-1">5 de alta prioridad</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><span class="metric-icon green"><i class="bi bi-people"></i></span><small
+                        class="d-block text-muted-custom mt-3">Residentes registrados</small><strong
+                        class="fs-3">160</strong><small class="d-block text-success mt-1">Datos completos: 96%</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row g-4">
+                <div class="col-xl-7">
+                  <div class="panel card h-100">
+                    <div class="panel-header card-header bg-white d-flex justify-content-between align-items-center">
+                      <h2 class="h5 mb-0">Actividad reciente</h2><button
+                        class="btn btn-sm btn-link text-decoration-none" data-screen="alerts">Ver todas</button>
+                    </div>
+                    <div class="card-body">
+                      <div class="d-flex gap-3 mb-4"><span class="timeline-dot"></span>
+                        <div><strong class="d-block">Pago registrado · Departamento 1204</strong><small
+                            class="text-muted-custom">María González · Hace 12 minutos</small></div>
+                      </div>
+                      <div class="d-flex gap-3 mb-4"><span class="timeline-dot"></span>
+                        <div><strong class="d-block">Nuevo residente agregado</strong><small
+                            class="text-muted-custom">Jorge Silva · Departamento 803 · Hace 1 hora</small></div>
+                      </div>
+                      <div class="d-flex gap-3"><span class="timeline-dot"></span>
+                        <div><strong class="d-block">Recordatorio enviado</strong><small
+                            class="text-muted-custom">Departamento 1502 · Hace 2 horas</small></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-5">
+                  <div class="panel card h-100">
+                    <div class="panel-header card-header bg-white">
+                      <h2 class="h5 mb-0">Acciones rápidas</h2>
+                    </div>
+                    <div class="card-body d-grid gap-2"><button class="btn btn-outline-primary text-start"
+                        data-screen="residents"><i class="bi bi-person-plus me-2"></i>Registrar
+                        residente</button><button class="btn btn-outline-primary text-start" data-screen="payments"><i
+                          class="bi bi-receipt me-2"></i>Revisar cuotas y pagos</button><button
+                        class="btn btn-outline-primary text-start" data-screen="quota-issue"><i
+                          class="bi bi-calculator me-2"></i>Calcular y emitir cuotas</button><button
+                        class="btn btn-outline-primary text-start" data-screen="alerts"><i
+                          class="bi bi-megaphone me-2"></i>Gestionar alertas de morosidad</button></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="residents" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Gestión de residentes</h1>
+                  <p class="text-muted-custom mb-0">Administra propietarios, arrendatarios y sus datos de contacto.</p>
+                </div><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#residentModal"><i
+                    class="bi bi-person-plus me-1"></i>Nuevo residente</button>
+              </div>
+              <div class="panel card">
+                <div class="card-body">
+                  <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-7"><label class="visually-hidden" for="residentSearch">Buscar
+                        residente</label>
+                      <div class="input-group"><span class="input-group-text bg-white"><i
+                            class="bi bi-search"></i></span><input class="form-control" id="residentSearch"
+                          placeholder="Buscar por nombre o departamento"></div>
+                    </div>
+                    <div class="col-12 col-md-5"><label class="visually-hidden" for="residentFilter">Filtrar tipo de
+                        residente</label><select class="form-select" id="residentFilter">
+                        <option value="all">Todos los tipos</option>
+                        <option value="Propietaria">Propietarias</option>
+                        <option value="Arrendatario">Arrendatarios</option>
+                      </select></div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table align-middle mb-0" id="residentTable">
+                      <thead>
+                        <tr>
+                          <th>Residente</th>
+                          <th>Departamento</th>
+                          <th>Tipo</th>
+                          <th>Contacto</th>
+                          <th>Estado</th>
+                          <th class="text-end">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>María González</strong><small
+                              class="d-block text-muted-custom">maria@correo.cl</small></td>
+                          <td>1204</td>
+                          <td>Propietaria</td>
+                          <td>+56 9 5555 1111</td>
+                          <td><span class="status-badge status-paid">Activo</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-light"
+                              data-toast="Se abrió el detalle de María González."><i class="bi bi-eye"></i><span
+                                class="visually-hidden">Ver detalle</span></button></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Jorge Silva</strong><small
+                              class="d-block text-muted-custom">jorge@correo.cl</small></td>
+                          <td>803</td>
+                          <td>Arrendatario</td>
+                          <td>+56 9 5555 2222</td>
+                          <td><span class="status-badge status-paid">Activo</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-light"
+                              data-toast="Se abrió el detalle de Jorge Silva."><i class="bi bi-eye"></i><span
+                                class="visually-hidden">Ver detalle</span></button></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Carolina Rojas</strong><small
+                              class="d-block text-muted-custom">carolina@correo.cl</small></td>
+                          <td>1502</td>
+                          <td>Propietaria</td>
+                          <td>+56 9 5555 3333</td>
+                          <td><span class="status-badge status-pending">Revisar datos</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-light"
+                              data-toast="Se abrió el detalle de Carolina Rojas."><i class="bi bi-eye"></i><span
+                                class="visually-hidden">Ver detalle</span></button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="payments" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Cuotas y pagos</h1>
+                  <p class="text-muted-custom mb-0">Consulta la recaudación por departamento y periodo.</p>
+                </div><button class="btn btn-outline-primary" data-toast="El informe se generó correctamente."><i
+                    class="bi bi-file-earmark-arrow-down me-1"></i>Generar informe</button>
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4">
+                  <div class="metric-card card">
+                    <div class="card-body"><small class="text-muted-custom">Recaudación del periodo</small><strong
+                        class="d-block fs-3 mt-1">$12.480.000</strong><span class="text-success small">78%
+                        recaudado</span></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="metric-card card">
+                    <div class="card-body"><small class="text-muted-custom">Pagos pendientes</small><strong
+                        class="d-block fs-3 mt-1">35</strong><span class="text-warning small">Requieren
+                        seguimiento</span></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="metric-card card">
+                    <div class="card-body"><small class="text-muted-custom">Periodo consultado</small><strong
+                        class="d-block fs-3 mt-1">Sept. 2026</strong><span class="text-muted-custom small">Actualizado
+                        hoy</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel card">
+                <div class="card-body">
+                  <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-4"><label class="form-label fw-semibold"
+                        for="paymentPeriod">Periodo</label><select class="form-select" id="paymentPeriod">
+                        <option>Septiembre 2026</option>
+                        <option>Agosto 2026</option>
+                        <option>Julio 2026</option>
+                      </select></div>
+                    <div class="col-12 col-md-4"><label class="form-label fw-semibold"
+                        for="paymentStatus">Estado</label><select class="form-select" id="paymentStatus">
+                        <option>Todos los estados</option>
+                        <option>Pagado</option>
+                        <option>Pendiente</option>
+                        <option>Moroso</option>
+                      </select></div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                      <thead>
+                        <tr>
+                          <th>Departamento</th>
+                          <th>Cuota</th>
+                          <th>Vencimiento</th>
+                          <th>Último pago</th>
+                          <th>Estado</th>
+                          <th class="text-end">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>1204</strong><small class="d-block text-muted-custom">María González</small></td>
+                          <td>$98.500</td>
+                          <td>05/09/2026</td>
+                          <td>03/09/2026</td>
+                          <td><span class="status-badge status-paid">Pagado</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-light"
+                              data-toast="Se abrió el detalle del departamento 1204."><i class="bi bi-eye"></i></button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><strong>803</strong><small class="d-block text-muted-custom">Jorge Silva</small></td>
+                          <td>$98.500</td>
+                          <td>05/09/2026</td>
+                          <td>—</td>
+                          <td><span class="status-badge status-pending">Pendiente</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-outline-primary"
+                              data-toast="Se preparó un recordatorio para el departamento 803.">Recordar</button></td>
+                        </tr>
+                        <tr>
+                          <td><strong>1502</strong><small class="d-block text-muted-custom">Carolina Rojas</small></td>
+                          <td>$112.300</td>
+                          <td>05/09/2026</td>
+                          <td>—</td>
+                          <td><span class="status-badge status-danger">Moroso</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-outline-danger" data-send-alert>Enviar
+                              alerta</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="quota-issue" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Cálculo y emisión de cuotas</h1>
+                  <p class="text-muted-custom mb-0">Consolida los conceptos del período, valida los totales y emite las cuotas.</p>
+                </div><span class="status-badge status-pending" id="quotaIssueStatus">Borrador</span>
+              </div>
+              <div class="row g-4">
+                <div class="col-12 col-lg-5">
+                  <div class="panel card h-100">
+                    <div class="card-header bg-white panel-header"><h2 class="h5 mb-0">Parámetros de emisión</h2></div>
+                    <div class="card-body">
+                      <label class="form-label fw-semibold" for="issuePeriod">Período</label>
+                      <select class="form-select mb-3" id="issuePeriod"><option>Octubre 2026</option><option>Noviembre 2026</option></select>
+                      <label class="form-label fw-semibold" for="dueDate">Fecha de vencimiento</label>
+                      <input class="form-control mb-3" id="dueDate" type="date" value="2026-10-05">
+                      <label class="form-label fw-semibold" for="distributionRule">Regla de distribución</label>
+                      <select class="form-select" id="distributionRule"><option>Prorrateo por departamento</option><option>Distribución equitativa</option></select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-7">
+                  <div class="panel card h-100">
+                    <div class="card-header bg-white panel-header"><h2 class="h5 mb-0">Resumen del cálculo</h2></div>
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between py-2 border-bottom"><span>Conceptos vigentes</span><strong>6</strong></div>
+                      <div class="d-flex justify-content-between py-2 border-bottom"><span>Total de gastos</span><strong>$15.760.000</strong></div>
+                      <div class="d-flex justify-content-between py-2 border-bottom"><span>Departamentos considerados</span><strong>160</strong></div>
+                      <div class="d-flex justify-content-between py-2"><span>Cuota promedio estimada</span><strong>$98.500</strong></div>
+                      <div class="alert alert-info mt-3 mb-0" id="quotaValidation">Ejecute el cálculo para validar que el total distribuido coincida con el total de gastos.</div>
+                    </div>
+                    <div class="card-footer bg-white d-flex flex-wrap justify-content-end gap-2">
+                      <button class="btn btn-outline-primary" data-calc-quotas><i class="bi bi-calculator me-1"></i>Calcular</button>
+                      <button class="btn btn-primary" data-emit-quotas disabled><i class="bi bi-check2-circle me-1"></i>Emitir cuotas</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="expense-concepts" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Conceptos de gasto</h1>
+                  <p class="text-muted-custom mb-0">Mantiene los conceptos ordinarios y extraordinarios utilizados en el cálculo.</p>
+                </div><button class="btn btn-primary" data-add-concept><i class="bi bi-plus-lg me-1"></i>Agregar concepto</button>
+              </div>
+              <div class="panel card">
+                <div class="card-body">
+                  <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-4"><label class="form-label fw-semibold" for="conceptPeriod">Período</label><select class="form-select" id="conceptPeriod"><option>Octubre 2026</option></select></div>
+                    <div class="col-12 col-md-4"><label class="form-label fw-semibold" for="conceptType">Tipo</label><select class="form-select" id="conceptType"><option>Todos</option><option>Ordinario</option><option>Extraordinario</option></select></div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table align-middle mb-0" id="conceptTable">
+                      <thead><tr><th>Concepto</th><th>Tipo</th><th>Monto</th><th>Estado</th><th class="text-end">Acción</th></tr></thead>
+                      <tbody>
+                        <tr><td>Electricidad áreas comunes</td><td>Ordinario</td><td>$3.400.000</td><td><span class="status-badge status-paid">Vigente</span></td><td class="text-end"><button class="btn btn-sm btn-light" data-toast="Se abrió la edición del concepto."><i class="bi bi-pencil"></i></button></td></tr>
+                        <tr><td>Mantención de ascensores</td><td>Ordinario</td><td>$2.180.000</td><td><span class="status-badge status-paid">Vigente</span></td><td class="text-end"><button class="btn btn-sm btn-light" data-toast="Se abrió la edición del concepto."><i class="bi bi-pencil"></i></button></td></tr>
+                        <tr><td>Reparación bomba de agua</td><td>Extraordinario</td><td>$1.250.000</td><td><span class="status-badge status-pending">Por aprobar</span></td><td class="text-end"><button class="btn btn-sm btn-light" data-toast="Se abrió la edición del concepto."><i class="bi bi-pencil"></i></button></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="reports" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Informes</h1>
+                  <p class="text-muted-custom mb-0">Genera reportes financieros y operacionales con filtros trazables.</p>
+                </div><button class="btn btn-primary" data-generate-report><i class="bi bi-file-earmark-bar-graph me-1"></i>Generar informe</button>
+              </div>
+              <div class="panel card mb-4">
+                <div class="card-body"><div class="row g-3">
+                  <div class="col-12 col-md-4"><label class="form-label fw-semibold" for="reportType">Tipo de informe</label><select class="form-select" id="reportType"><option>Recaudación y morosidad</option><option>Residentes y departamentos</option><option>Personal e instalaciones</option></select></div>
+                  <div class="col-12 col-md-4"><label class="form-label fw-semibold" for="reportPeriod">Período</label><select class="form-select" id="reportPeriod"><option>Septiembre 2026</option><option>Agosto 2026</option></select></div>
+                  <div class="col-12 col-md-4"><label class="form-label fw-semibold" for="reportFormat">Formato</label><select class="form-select" id="reportFormat"><option>Vista previa</option><option>PDF</option><option>CSV</option></select></div>
+                </div></div>
+              </div>
+              <div class="panel card" id="reportPreview">
+                <div class="card-header bg-white panel-header d-flex justify-content-between align-items-center"><h2 class="h5 mb-0">Vista previa · Recaudación y morosidad</h2><span class="status-badge status-info">Datos al 30/09/2026</span></div>
+                <div class="card-body"><div class="row row-cols-1 row-cols-md-3 g-3">
+                  <div class="col"><small class="text-muted-custom">Total emitido</small><strong class="d-block fs-4">$16.000.000</strong></div>
+                  <div class="col"><small class="text-muted-custom">Total recaudado</small><strong class="d-block fs-4">$12.480.000</strong></div>
+                  <div class="col"><small class="text-muted-custom">Morosidad</small><strong class="d-block fs-4 text-danger">22%</strong></div>
+                </div><p class="text-muted-custom mt-4 mb-0">El informe conserva período, filtros, usuario generador y fecha de emisión para auditoría.</p></div>
+              </div>
+            </section>
+
+            <section id="operations" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Personal e instalaciones</h1>
+                  <p class="text-muted-custom mb-0">Mantiene registros operacionales vigentes y su historial.</p>
+                </div><div class="d-flex gap-2"><button class="btn btn-outline-primary" data-toast="Se abrió el formulario de nueva instalación."><i class="bi bi-building-add me-1"></i>Nueva instalación</button><button class="btn btn-primary" data-toast="Se abrió el formulario de nuevo integrante."><i class="bi bi-person-add me-1"></i>Nuevo personal</button></div>
+              </div>
+              <div class="row g-4">
+                <div class="col-12 col-xl-6"><div class="panel card h-100"><div class="card-header bg-white panel-header"><h2 class="h5 mb-0">Personal</h2></div><div class="card-body p-0"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Nombre</th><th>Función</th><th>Estado</th></tr></thead><tbody><tr><td>Marcelo Soto</td><td>Conserje</td><td><span class="status-badge status-paid">Activo</span></td></tr><tr><td>Daniela Muñoz</td><td>Mantención</td><td><span class="status-badge status-paid">Activo</span></td></tr><tr><td>Luis Herrera</td><td>Mantención</td><td><span class="status-badge status-pending">Licencia</span></td></tr></tbody></table></div></div></div></div>
+                <div class="col-12 col-xl-6"><div class="panel card h-100"><div class="card-header bg-white panel-header"><h2 class="h5 mb-0">Instalaciones</h2></div><div class="card-body p-0"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Instalación</th><th>Tipo</th><th>Estado</th></tr></thead><tbody><tr><td>Ascensor norte</td><td>Transporte vertical</td><td><span class="status-badge status-paid">Operativo</span></td></tr><tr><td>Bomba de agua 2</td><td>Hidráulica</td><td><span class="status-badge status-pending">Mantención</span></td></tr><tr><td>Sala multiuso</td><td>Espacio común</td><td><span class="status-badge status-paid">Disponible</span></td></tr></tbody></table></div></div></div></div>
+              </div>
+            </section>
+
+            <section id="alerts" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Alertas de morosidad</h1>
+                  <p class="text-muted-custom mb-0">Envía recordatorios y registra el seguimiento de cada caso.</p>
+                </div><button class="btn btn-primary" data-toast="Se programó una revisión para mañana."><i
+                    class="bi bi-calendar-check me-1"></i>Programar seguimiento</button>
+              </div>
+              <div
+                class="alert-card danger rounded-3 p-3 p-md-4 mb-3 d-flex flex-wrap justify-content-between align-items-start gap-3">
+                <div><span class="status-badge status-danger mb-2">Alta prioridad</span>
+                  <h2 class="h5 mb-1">Departamento 1502 · 12 días de atraso</h2>
+                  <p class="text-muted-custom mb-0">Cuota pendiente de $112.300. El residente aún no registra un
+                    compromiso de pago.</p>
+                </div><button class="btn btn-outline-danger" data-send-alert><i class="bi bi-send me-1"></i>Enviar
+                  recordatorio</button>
+              </div>
+              <div
+                class="alert-card rounded-3 p-3 p-md-4 mb-3 d-flex flex-wrap justify-content-between align-items-start gap-3">
+                <div><span class="status-badge status-pending mb-2">Preventiva</span>
+                  <h2 class="h5 mb-1">Departamentos 803 y 904 · vencimiento próximo</h2>
+                  <p class="text-muted-custom mb-0">Las cuotas vencen en 2 días. Se recomienda un aviso preventivo por
+                    correo.</p>
+                </div><button class="btn btn-outline-primary" data-send-alert><i class="bi bi-send me-1"></i>Enviar
+                  aviso</button>
+              </div>
+              <div class="panel card">
+                <div class="card-body">
+                  <h2 class="h5">Historial de comunicaciones</h2>
+                  <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                      <thead>
+                        <tr>
+                          <th>Fecha</th>
+                          <th>Departamento</th>
+                          <th>Canal</th>
+                          <th>Resultado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>21/09/2026 · 10:30</td>
+                          <td>1502</td>
+                          <td><i class="bi bi-envelope me-1"></i>Correo</td>
+                          <td><span class="status-badge status-info">Entregado</span></td>
+                        </tr>
+                        <tr>
+                          <td>20/09/2026 · 16:15</td>
+                          <td>803</td>
+                          <td><i class="bi bi-phone me-1"></i>Teléfono</td>
+                          <td><span class="status-badge status-pending">Pendiente</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="resident-profile" class="screen">
+              <div class="mb-4">
+                <h1 class="page-title h2 mb-1">Mi información</h1>
+                <p class="text-muted-custom mb-0">Revisa tus datos y solicita una actualización a la administración.</p>
+              </div>
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <div class="panel card">
+                    <div class="card-header bg-white panel-header d-flex justify-content-between align-items-center">
+                      <h2 class="h5 mb-0">Datos registrados</h2><span class="status-badge status-paid">Registro
+                        activo</span>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="profile-row row g-0 p-3">
+                        <div class="col-12 col-sm-5 profile-label">Nombre completo</div>
+                        <div class="col-12 col-sm-7 fw-semibold">María González</div>
+                      </div>
+                      <div class="profile-row row g-0 p-3">
+                        <div class="col-12 col-sm-5 profile-label">Departamento</div>
+                        <div class="col-12 col-sm-7 fw-semibold">1204</div>
+                      </div>
+                      <div class="profile-row row g-0 p-3">
+                        <div class="col-12 col-sm-5 profile-label">Tipo de residente</div>
+                        <div class="col-12 col-sm-7 fw-semibold">Propietaria</div>
+                      </div>
+                      <div class="profile-row row g-0 p-3">
+                        <div class="col-12 col-sm-5 profile-label">Teléfono</div>
+                        <div class="col-12 col-sm-7 fw-semibold">+56 9 5555 1111</div>
+                      </div>
+                      <div class="profile-row row g-0 p-3">
+                        <div class="col-12 col-sm-5 profile-label">Correo electrónico</div>
+                        <div class="col-12 col-sm-7 fw-semibold">maria@correo.cl</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                  <div class="panel card h-100">
+                    <div class="card-body">
+                      <div class="metric-icon blue mb-3"><i class="bi bi-shield-check"></i></div>
+                      <h2 class="h5">¿Necesitas cambiar un dato?</h2>
+                      <p class="text-muted-custom">Por seguridad, la administración valida las modificaciones de
+                        contacto.</p><button class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#updateModal">Solicitar actualización</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="resident-payments" class="screen">
+              <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                  <h1 class="page-title h2 mb-1">Mis cuotas y pagos</h1>
+                  <p class="text-muted-custom mb-0">Consulta tus cobros, registra pagos y descarga comprobantes.</p>
+                </div><button class="btn btn-outline-primary" data-toast="El comprobante se descargó correctamente."><i
+                    class="bi bi-download me-1"></i>Último comprobante</button>
+              </div>
+              <div class="alert alert-danger d-flex gap-3 align-items-start" id="residentDueAlert" role="alert"><i
+                  class="bi bi-exclamation-circle-fill fs-4"></i>
+                <div><strong>Tienes una cuota vencida.</strong>
+                  <div>La cuota de septiembre por <strong>$98.500</strong> venció el 05/09/2026. Puedes regularizarla
+                    ahora para evitar nuevas alertas.</div><button class="btn btn-danger btn-sm mt-3" data-pay-now>Pagar
+                    ahora</button>
+                </div>
+              </div>
+              <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><small class="text-muted-custom">Saldo pendiente</small><strong
+                        class="d-block fs-3 mt-2 text-danger">$98.500</strong><span
+                        class="text-muted-custom small">Septiembre 2026</span></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><small class="text-muted-custom">Próximo vencimiento</small><strong
+                        class="d-block fs-3 mt-2">05/10/2026</strong><span class="text-muted-custom small">Octubre
+                        2026</span></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="metric-card card h-100">
+                    <div class="card-body"><small class="text-muted-custom">Departamento</small><strong
+                        class="d-block fs-3 mt-2">1204</strong><span class="text-muted-custom small">María González ·
+                        Propietaria</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel card">
+                <div class="panel-header card-header bg-white d-flex justify-content-between align-items-center">
+                  <h2 class="h5 mb-0">Historial de pagos</h2><span class="small text-muted-custom">Actualizado
+                    hoy</span>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                      <thead>
+                        <tr>
+                          <th>Periodo</th>
+                          <th>Monto</th>
+                          <th>Vencimiento</th>
+                          <th>Fecha de pago</th>
+                          <th>Estado</th>
+                          <th>Comprobante</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Septiembre 2026</td>
+                          <td>$98.500</td>
+                          <td>05/09/2026</td>
+                          <td>—</td>
+                          <td><span class="status-badge status-danger">Vencida</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary" data-pay-now>Registrar pago</button></td>
+                        </tr>
+                        <tr>
+                          <td>Agosto 2026</td>
+                          <td>$96.800</td>
+                          <td>05/08/2026</td>
+                          <td>04/08/2026</td>
+                          <td><span class="status-badge status-paid">Pagado</span></td>
+                          <td><button class="btn btn-sm btn-light" data-toast="El comprobante de agosto se descargó."><i
+                                class="bi bi-download"></i><span class="visually-hidden">Descargar
+                                comprobante</span></button></td>
+                        </tr>
+                        <tr>
+                          <td>Julio 2026</td>
+                          <td>$96.800</td>
+                          <td>05/07/2026</td>
+                          <td>05/07/2026</td>
+                          <td><span class="status-badge status-paid">Pagado</span></td>
+                          <td><button class="btn btn-sm btn-light" data-toast="El comprobante de julio se descargó."><i
+                                class="bi bi-download"></i><span class="visually-hidden">Descargar
+                                comprobante</span></button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+      <footer class="px-3 px-lg-4 py-2 d-flex flex-wrap align-items-center justify-content-between gap-2 small text-muted-custom">
+        <span><i class="bi bi-shield-check me-1"></i>Sesión protegida · Datos de demostración</span>
+        <span>Nuevos Horizontes · Prototipo académico</span>
+      </footer>
+    </section>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5" id="mobileNavLabel">Navegación</h2><button type="button" class="btn-close"
+        data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav class="nav flex-column gap-1" id="mobileNavLinks"></nav>
+    </div>
+  </div>
+
+  <div class="modal" id="residentModal" tabindex="-1" aria-labelledby="residentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="residentModalLabel">Registrar nuevo residente</h2><button type="button"
+            class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <form id="residentForm" novalidate>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-12 col-md-6"><label class="form-label fw-semibold" for="newName">Nombre
+                  completo</label><input class="form-control" id="newName" required>
+                <div class="invalid-feedback">Ingresa el nombre completo.</div>
+              </div>
+              <div class="col-12 col-md-6"><label class="form-label fw-semibold"
+                  for="newDept">Departamento</label><input class="form-control" id="newDept" placeholder="Ej. 1204"
+                  required>
+                <div class="invalid-feedback">Ingresa el departamento.</div>
+              </div>
+              <div class="col-12 col-md-6"><label class="form-label fw-semibold" for="newType">Tipo de
+                  residente</label><select class="form-select" id="newType" required>
+                  <option value="">Seleccionar</option>
+                  <option>Propietaria</option>
+                  <option>Arrendatario</option>
+                </select>
+                <div class="invalid-feedback">Selecciona el tipo.</div>
+              </div>
+              <div class="col-12 col-md-6"><label class="form-label fw-semibold" for="newPhone">Teléfono</label><input
+                  class="form-control" id="newPhone" placeholder="+56 9 5555 0000" required>
+                <div class="invalid-feedback">Ingresa un teléfono.</div>
+              </div>
+              <div class="col-12"><label class="form-label fw-semibold" for="newEmail">Correo electrónico</label><input
+                  class="form-control" id="newEmail" type="email" placeholder="correo@ejemplo.cl" required>
+                <div class="invalid-feedback">Ingresa un correo válido.</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"><button type="button" class="btn btn-light"
+              data-bs-dismiss="modal">Cancelar</button><button type="submit" class="btn btn-primary">Guardar
+              residente</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="updateModalLabel">Solicitar actualización</h2><button type="button"
+            class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body"><label class="form-label fw-semibold" for="updateReason">¿Qué dato necesitas
+            actualizar?</label><textarea class="form-control" id="updateReason" rows="3"
+            placeholder="Ej. Cambié mi número de teléfono"></textarea></div>
+        <div class="modal-footer"><button type="button" class="btn btn-light"
+            data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-primary"
+            data-update-request>Enviar solicitud</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-header"><i class="bi bi-check-circle-fill text-success me-2"></i><strong class="me-auto">Nuevos
+          Horizontes</strong><button type="button" class="btn-close" data-bs-dismiss="toast"
+          aria-label="Cerrar"></button></div>
+      <div class="toast-body" id="toastMessage">Acción realizada correctamente.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const navItems = {
+      admin: [
+        ['dashboard', 'Resumen', 'speedometer2'],
+        ['residents', 'Residentes', 'people'],
+        ['expense-concepts', 'Conceptos de gasto', 'journal-text'],
+        ['quota-issue', 'Emisión de cuotas', 'calculator'],
+        ['payments', 'Cuotas y pagos', 'receipt'],
+        ['alerts', 'Alertas de morosidad', 'bell'],
+        ['reports', 'Informes', 'file-earmark-bar-graph'],
+        ['operations', 'Personal e instalaciones', 'buildings']
+      ],
+      resident: [
+        ['resident-profile', 'Mi información', 'person-vcard'],
+        ['resident-payments', 'Mis cuotas y pagos', 'wallet2']
+      ]
+    };
+    const navGroups = {admin: navItems.admin.map(i => i[0]), resident: navItems.resident.map(i => i[0])};
+    const desktopNav = document.getElementById('desktopNav');
+    const mobileNavLinks = document.getElementById('mobileNavLinks');
+    const screens = [...document.querySelectorAll('.screen')];
+    const roleBadge = document.getElementById('roleBadge');
+    let currentRole = null;
+
+    const makeNav = (container, role) => {
+      container.innerHTML = '';
+      if (!role) return;
+      navItems[role].forEach(([id, label, icon]) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'nav-link text-start d-flex align-items-center gap-2';
+        b.dataset.screen = id;
+        b.innerHTML = `<i class="bi bi-${icon}"></i><span>${label}</span>`;
+        container.appendChild(b);
+      });
+      const logout = document.createElement('button');
+      logout.type = 'button';
+      logout.className = 'nav-link text-start d-flex align-items-center gap-2 mt-3 border-top pt-3';
+      logout.dataset.logout = 'true';
+      logout.innerHTML = '<i class="bi bi-box-arrow-left"></i><span>Cerrar sesión</span>';
+      container.appendChild(logout);
+    };
+
+    const setRole = role => {
+      currentRole = role;
+      const resident = role === 'resident';
+      roleBadge.textContent = resident ? 'Residente' : 'Administración';
+      document.getElementById('desktopRoleName').textContent = resident ? 'María González' : 'Ana Pérez';
+      document.getElementById('desktopRoleLabel').textContent = resident ? 'Residente · Departamento 1204' : 'Administración';
+      document.getElementById('desktopAvatar').textContent = resident ? 'MG' : 'AP';
+      makeNav(desktopNav, role);
+      makeNav(mobileNavLinks, role);
+    };
+
+    const show = id => {
+      if (id !== 'login') {
+        if (!currentRole || !navGroups[currentRole].includes(id)) {
+          id = currentRole === 'resident' ? 'resident-payments' : currentRole === 'admin' ? 'dashboard' : 'login';
+        }
+      }
+      screens.forEach(s => s.classList.toggle('active', s.id === id));
+      document.querySelectorAll('[data-screen]').forEach(b => {
+        const active = b.dataset.screen === id;
+        b.classList.toggle('active', active);
+        if (b.classList.contains('nav-link')) b.setAttribute('aria-current', active ? 'page' : 'false');
+      });
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+
+    const logout = () => {
+      currentRole = null;
+      makeNav(desktopNav, null);
+      makeNav(mobileNavLinks, null);
+      roleBadge.textContent = 'Sin sesión';
+      document.getElementById('desktopRoleName').textContent = 'Usuario';
+      document.getElementById('desktopRoleLabel').textContent = 'Inicie sesión para continuar';
+      document.getElementById('desktopAvatar').textContent = 'NH';
+      const form = document.getElementById('loginForm');
+      form.reset();
+      form.classList.remove('was-validated');
+      show('login');
+    };
+
+    document.addEventListener('click', e => {
+      const logoutButton = e.target.closest('[data-logout]');
+      if (logoutButton) {
+        e.preventDefault();
+        logout();
+        return;
+      }
+      const target = e.target.closest('[data-screen]');
+      if (target) {
+        e.preventDefault();
+        show(target.dataset.screen);
+        const canvas = document.getElementById('mobileNav');
+        const instance = bootstrap.Offcanvas.getInstance(canvas);
+        if (instance) instance.hide();
+      }
+    });
+    const toast = message => {document.getElementById('toastMessage').textContent = message; bootstrap.Toast.getOrCreateInstance(document.getElementById('liveToast')).show();};
+    document.addEventListener('click', e => {const target = e.target.closest('[data-toast]'); if (target) toast(target.dataset.toast); const alertButton = e.target.closest('[data-send-alert]'); if (alertButton) {alertButton.disabled = true; alertButton.classList.remove('btn-outline-danger', 'btn-outline-primary'); alertButton.classList.add('btn-success'); alertButton.innerHTML = '<i class="bi bi-check2 me-1"></i>Enviado'; toast('El recordatorio fue enviado y quedó registrado en el historial.');} const pay = e.target.closest('[data-pay-now]'); if (pay) {document.getElementById('residentDueAlert').classList.remove('alert-danger'); document.getElementById('residentDueAlert').classList.add('alert-success'); document.getElementById('residentDueAlert').innerHTML = '<i class="bi bi-check-circle-fill fs-4"></i><div><strong>Solicitud de pago iniciada.</strong><div>El residente podrá completar el pago y luego adjuntar su comprobante.</div></div>'; toast('Se inició el flujo de pago seguro.');} const update = e.target.closest('[data-update-request]'); if (update) {bootstrap.Modal.getInstance(document.getElementById('updateModal')).hide(); toast('La solicitud fue enviada a la administración.');} const calculate = e.target.closest('[data-calc-quotas]'); if (calculate) {const validation = document.getElementById('quotaValidation'); validation.classList.remove('alert-info'); validation.classList.add('alert-success'); validation.textContent = 'Cálculo validado: $15.760.000 distribuidos entre 160 departamentos sin diferencias.'; document.querySelector('[data-emit-quotas]').disabled = false; document.getElementById('quotaIssueStatus').textContent = 'Calculado'; toast('El cálculo de cuotas fue validado correctamente.');} const emit = e.target.closest('[data-emit-quotas]'); if (emit) {emit.disabled = true; document.getElementById('quotaIssueStatus').textContent = 'Emitido'; document.getElementById('quotaIssueStatus').classList.remove('status-pending'); document.getElementById('quotaIssueStatus').classList.add('status-paid'); toast('Las 160 cuotas fueron emitidas y registradas en auditoría.');} const addConcept = e.target.closest('[data-add-concept]'); if (addConcept) {document.querySelector('#conceptTable tbody').insertAdjacentHTML('beforeend', '<tr><td>Aseo extraordinario</td><td>Extraordinario</td><td>$480.000</td><td><span class="status-badge status-info">Nuevo</span></td><td class="text-end"><button class="btn btn-sm btn-light" data-toast="Se abrió la edición del concepto."><i class="bi bi-pencil"></i></button></td></tr>'); addConcept.disabled = true; toast('El concepto de demostración fue agregado al período.');} const report = e.target.closest('[data-generate-report]'); if (report) {document.querySelector('#reportPreview .status-badge').textContent = 'Generado ahora'; toast('El informe fue generado con sus filtros y quedó registrado en auditoría.');} });
+    document.getElementById('loginForm').addEventListener('submit', e => {e.preventDefault(); const form = e.currentTarget; form.classList.add('was-validated'); if (!form.checkValidity()) return; const role = document.getElementById('loginRole').value; setRole(role); show(role === 'resident' ? 'resident-payments' : 'dashboard'); toast('Inicio de sesión realizado correctamente.');});
+    document.getElementById('residentForm').addEventListener('submit', e => {e.preventDefault(); const form = e.currentTarget; form.classList.add('was-validated'); if (!form.checkValidity()) return; const name = document.getElementById('newName').value; const dept = document.getElementById('newDept').value; const type = document.getElementById('newType').value; const phone = document.getElementById('newPhone').value; const email = document.getElementById('newEmail').value; document.querySelector('#residentTable tbody').insertAdjacentHTML('beforeend', `<tr><td><strong>${name}</strong><small class="d-block text-muted-custom">${email}</small></td><td>${dept}</td><td>${type}</td><td>${phone}</td><td><span class="status-badge status-info">Pendiente validar</span></td><td class="text-end"><button class="btn btn-sm btn-light" data-toast="Se abrió el detalle de ${name}."><i class="bi bi-eye"></i><span class="visually-hidden">Ver detalle</span></button></td></tr>`); bootstrap.Modal.getInstance(document.getElementById('residentModal')).hide(); form.reset(); form.classList.remove('was-validated'); toast('Residente registrado correctamente.');});
+    const filterResidents = () => {const q = document.getElementById('residentSearch').value.toLowerCase(); const type = document.getElementById('residentFilter').value; document.querySelectorAll('#residentTable tbody tr').forEach(row => {const text = row.textContent.toLowerCase(); const matchesText = text.includes(q); const matchesType = type === 'all' || row.children[2].textContent.trim() === type; row.classList.toggle('d-none', !(matchesText && matchesType));});};
+    document.getElementById('residentSearch').addEventListener('input', filterResidents); document.getElementById('residentFilter').addEventListener('change', filterResidents);
+    // El prototipo parte siempre en autenticación. La navegación y los formularios
+    // se habilitan solo después de iniciar sesión y respetan el rol activo.
+    show('login');
+  </script>
+</body>
+
+</html>
