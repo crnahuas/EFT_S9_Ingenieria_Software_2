@@ -42,6 +42,8 @@ En la pantalla de inicio:
 - ingrese un correo con formato válido;
 - ingrese una contraseña de al menos seis caracteres.
 
+Después del ingreso, el menú muestra únicamente las funciones autorizadas para el perfil seleccionado. Ambos perfiles disponen de `Cerrar sesión`, y los intentos de abrir una pantalla ajena al rol son redirigidos a una vista permitida.
+
 El prototipo es una simulación académica. No contiene backend, persistencia, autenticación ni integraciones reales.
 
 ## Estructura
@@ -68,3 +70,5 @@ La presentación y reflexión son individuales. Cada integrante debe entregar po
 ## Alcance técnico
 
 Las tecnologías descritas en el DAS corresponden a una propuesta arquitectónica. Este repositorio contiene documentación, diagramas y un prototipo de interfaz; no incluye una implementación productiva del sistema.
+
+Los criterios de accesibilidad toman como referencia WCAG 2.1 nivel AA. Esta referencia orienta el diseño del prototipo, pero no constituye una declaración de conformidad completa sin una auditoría formal.

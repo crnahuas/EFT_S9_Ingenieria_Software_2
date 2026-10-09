@@ -377,7 +377,7 @@
             <span>Nuevos Horizontes<small class="d-block fw-normal opacity-75">Gestión de gastos comunes</small></span>
           </a>
           <div class="d-flex align-items-center gap-2">
-            <span class="badge rounded-pill text-bg-light d-none d-md-inline" id="roleBadge">Administración</span>
+            <span class="badge rounded-pill text-bg-light d-none d-md-inline" id="roleBadge">Sin sesión</span>
             <button class="btn btn-link d-lg-none fs-4 p-1" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#mobileNav" aria-controls="mobileNav" aria-label="Abrir menú"><i
                 class="bi bi-list"></i></button>
@@ -391,10 +391,10 @@
         <div class="row g-0">
           <aside class="sidebar col-lg-3 col-xl-2 d-none d-lg-block p-3">
             <div class="role-card rounded-3 p-3 mb-4">
-              <div class="d-flex align-items-center gap-2"><span class="role-avatar" id="desktopAvatar">AP</span>
-                <div><strong class="d-block" id="desktopRoleName">Ana Pérez</strong><small class="text-muted-custom"
-                    id="desktopRoleLabel">Administración</small></div>
-              </div><small class="text-muted-custom d-block mt-3">Acceso a residentes, pagos y alertas</small>
+              <div class="d-flex align-items-center gap-2"><span class="role-avatar" id="desktopAvatar">NH</span>
+                <div><strong class="d-block" id="desktopRoleName">Usuario</strong><small class="text-muted-custom"
+                    id="desktopRoleLabel">Inicie sesión para continuar</small></div>
+              </div><small class="text-muted-custom d-block mt-3" id="desktopRoleAccess">Seleccione un perfil para acceder a sus funciones.</small>
             </div>
             <nav class="nav flex-column gap-1" aria-label="Navegación principal" id="desktopNav"></nav>
           </aside>
@@ -488,8 +488,8 @@
                     </div>
                     <div class="card-body">
                       <div class="d-flex gap-3 mb-4"><span class="timeline-dot"></span>
-                        <div><strong class="d-block">Pago registrado · Departamento 1204</strong><small
-                            class="text-muted-custom">María González · Hace 12 minutos</small></div>
+                        <div><strong class="d-block">Cuota vencida · Departamento 1204</strong><small
+                            class="text-muted-custom">María González · 12 días de atraso</small></div>
                       </div>
                       <div class="d-flex gap-3 mb-4"><span class="timeline-dot"></span>
                         <div><strong class="d-block">Nuevo residente agregado</strong><small
@@ -642,6 +642,7 @@
                         <option>Todos los estados</option>
                         <option>Pagado</option>
                         <option>Pendiente</option>
+                        <option>Vencida</option>
                         <option>Moroso</option>
                       </select></div>
                   </div>
@@ -662,11 +663,10 @@
                           <td><strong>1204</strong><small class="d-block text-muted-custom">María González</small></td>
                           <td>$98.500</td>
                           <td>05/09/2026</td>
-                          <td>03/09/2026</td>
-                          <td><span class="status-badge status-paid">Pagado</span></td>
-                          <td class="text-end"><button class="btn btn-sm btn-light"
-                              data-toast="Se abrió el detalle del departamento 1204."><i class="bi bi-eye"></i></button>
-                          </td>
+                          <td>—</td>
+                          <td><span class="status-badge status-danger">Vencida</span></td>
+                          <td class="text-end"><button class="btn btn-sm btn-outline-danger" data-send-alert>Enviar
+                              alerta</button></td>
                         </tr>
                         <tr>
                           <td><strong>803</strong><small class="d-block text-muted-custom">Jorge Silva</small></td>
@@ -1139,6 +1139,7 @@
       roleBadge.textContent = resident ? 'Residente' : 'Administración';
       document.getElementById('desktopRoleName').textContent = resident ? 'María González' : 'Ana Pérez';
       document.getElementById('desktopRoleLabel').textContent = resident ? 'Residente · Departamento 1204' : 'Administración';
+      document.getElementById('desktopRoleAccess').textContent = resident ? 'Acceso a información personal, cuotas y pagos' : 'Acceso a residentes, cuotas, pagos, alertas e informes';
       document.getElementById('desktopAvatar').textContent = resident ? 'MG' : 'AP';
       makeNav(desktopNav, role);
       makeNav(mobileNavLinks, role);
@@ -1166,6 +1167,7 @@
       roleBadge.textContent = 'Sin sesión';
       document.getElementById('desktopRoleName').textContent = 'Usuario';
       document.getElementById('desktopRoleLabel').textContent = 'Inicie sesión para continuar';
+      document.getElementById('desktopRoleAccess').textContent = 'Seleccione un perfil para acceder a sus funciones.';
       document.getElementById('desktopAvatar').textContent = 'NH';
       const form = document.getElementById('loginForm');
       form.reset();
