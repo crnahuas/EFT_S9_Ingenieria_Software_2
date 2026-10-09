@@ -14,14 +14,16 @@ Entrega de la EFT de Semana 9 de Ingeniería de Software II. El proyecto propone
 |---|---|---|
 | Informe grupal DAS | [`docs/das/GRY2203_EFT_S9_Grupo7_DAS.docx`](docs/das/GRY2203_EFT_S9_Grupo7_DAS.docx) | Versión final del informe con requisitos, casos de uso, arquitectura 4+1, decisiones de diseño y trazabilidad del proyecto. |
 | Diagramas editables | [`docs/arquitectura/EXP2_S9_Grupo7_Diagramas.drawio`](docs/arquitectura/EXP2_S9_Grupo7_Diagramas.drawio) | Archivo final con las vistas de escenarios, lógica, proceso, desarrollo y física, además de las especificaciones de casos de uso. |
-| Prototipo interactivo | [`prototipos/alta-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo.html`](prototipos/alta-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo.html) | Mockup final navegable con acceso y opciones diferenciadas para Administración y Residente. |
+| Prototipo de baja fidelidad | [`prototipos/baja-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo_Baja_Fidelidad.html`](prototipos/baja-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo_Baja_Fidelidad.html) | Wireframe navegable que documenta la estructura inicial, los perfiles y los flujos priorizados. |
+| Prototipo de alta fidelidad | [`prototipos/alta-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo.html`](prototipos/alta-fidelidad/GRY2203_EFT_S9_Grupo7_Prototipo.html) | Mockup final navegable con acceso y opciones diferenciadas para Administración y Residente. |
 | Matriz de trazabilidad | [`docs/MATRIZ_TRAZABILIDAD.md`](docs/MATRIZ_TRAZABILIDAD.md) | Relación entre casos de uso, requisitos funcionales y no funcionales, arquitectura y evidencia del prototipo. |
 
 ## Preparación de la entrega final
 
 - Se consolidó el informe en `GRY2203_EFT_S9_Grupo7_DAS.docx`.
 - Se normalizó el nombre del archivo editable a `EXP2_S9_Grupo7_Diagramas.drawio`.
-- Se identificó el prototipo navegable como `GRY2203_EFT_S9_Grupo7_Prototipo.html`.
+- Se incorporó el wireframe navegable como `GRY2203_EFT_S9_Grupo7_Prototipo_Baja_Fidelidad.html`.
+- Se identificó el prototipo final navegable como `GRY2203_EFT_S9_Grupo7_Prototipo.html`.
 - Se actualizaron los enlaces y la estructura del repositorio para utilizar únicamente los nombres finales.
 
 ## Cobertura
@@ -30,13 +32,15 @@ Entrega de la EFT de Semana 9 de Ingeniería de Software II. El proyecto propone
 - RNF-01 a RNF-10.
 - CU-01 a CU-09.
 - Vistas de escenarios, lógica, proceso, desarrollo y física.
-- Prototipo demostrativo con navegación por roles.
+- Evolución demostrable desde el wireframe de baja fidelidad hasta el prototipo final con navegación por roles.
 
-## Revisión del prototipo
+## Revisión de los prototipos
 
-Abra el archivo HTML directamente en un navegador. Se necesita conexión a Internet para cargar Bootstrap y Bootstrap Icons desde CDN.
+Abra cada archivo HTML directamente en un navegador. El prototipo de baja fidelidad es autocontenido; el de alta fidelidad necesita conexión a Internet para cargar Bootstrap y Bootstrap Icons desde CDN.
 
-En la pantalla de inicio:
+El prototipo de baja fidelidad permite recorrer las pantallas iniciales de administración y residente para observar la estructura y los flujos definidos antes del refinamiento visual.
+
+En el prototipo de alta fidelidad:
 
 - seleccione `Administración` o `Residente`;
 - ingrese un correo con formato válido;
@@ -59,6 +63,8 @@ El prototipo es una simulación académica. No contiene backend, persistencia, a
 │   └── das
 │       └── GRY2203_EFT_S9_Grupo7_DAS.docx
 └── prototipos
+    ├── baja-fidelidad
+    │   └── GRY2203_EFT_S9_Grupo7_Prototipo_Baja_Fidelidad.html
     └── alta-fidelidad
         └── GRY2203_EFT_S9_Grupo7_Prototipo.html
 ```
