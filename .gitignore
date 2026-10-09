@@ -35,6 +35,7 @@ coverage/
 *.key
 
 # Paquetes y material individual no versionado automáticamente
+material_individual/
 *.zip
 *.7z
 *.rar
