@@ -69,10 +69,6 @@ El prototipo es una simulación académica. No contiene backend, persistencia, a
         └── GRY2203_EFT_S9_Grupo7_Prototipo.html
 ```
 
-## Presentación individual
-
-La presentación y reflexión son individuales. Cada integrante debe entregar por separado su grabación MP4 de 3 a 5 minutos y el material visual de apoyo correspondiente.
-
 ## Alcance técnico
 
 Las tecnologías descritas en el DAS corresponden a una propuesta arquitectónica. Este repositorio contiene documentación, diagramas y un prototipo de interfaz; no incluye una implementación productiva del sistema.
